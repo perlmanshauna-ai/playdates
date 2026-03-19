@@ -520,8 +520,10 @@ const MAX_PER_SLOT = 1;
 const slots = [];
 
 function addSlots(startDate, endDate) {
-  const d = new Date(startDate);
-  const end = new Date(endDate);
+  const [sy, sm, sd] = startDate.split('-').map(Number);
+  const [ey, em, ed] = endDate.split('-').map(Number);
+  const d = new Date(sy, sm - 1, sd);
+  const end = new Date(ey, em - 1, ed);
   while (d <= end) {
     const day = d.getDay();
     if (day === 5) {
@@ -535,7 +537,7 @@ function addSlots(startDate, endDate) {
   }
 }
 
-addSlots('2025-04-10', '2025-06-14');
+addSlots('2026-04-10', '2026-06-14');
 
 // Load from localStorage
 function loadState() {
