@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playdates with the Babies 🍼</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF6F0;
+    --warm-white: #FFFDF9;
+    --blush: #F2C4B0;
+    --terracotta: #C96A3E;
+    --sage: #8FAF8C;
+    --sage-light: #C5D9C3;
+    --navy: #1E2D40;
+    --gold: #C9973E;
+    --text: #2C2C2C;
+    --muted: #888;
+    --friday: #C96A3E;
+    --saturday: #8FAF8C;
+    --sunday: #6A8FAF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    color: white;
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(201,106,62,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 75% 20%, rgba(143,175,140,0.2) 0%, transparent 55%);
+  }
+  .hero-inner { position: relative; max-width: 680px; margin: 0 auto; }
+  .hero-emoji { font-size: 2.8rem; margin-bottom: 16px; animation: bob 3s ease-in-out infinite; display: block; }
+  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+  .hero h1 em { font-style: italic; color: var(--blush); }
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.7;
+    opacity: 0.88;
+    max-width: 520px;
+    margin: 0 auto 20px;
+  }
+  .hero-note {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 40px;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    font-style: italic;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 28px 24px;
+    background: var(--warm-white);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .legend-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+  }
+  .dot-fri { background: var(--friday); }
+  .dot-sat { background: var(--saturday); }
+  .dot-sun { background: var(--sunday); }
+
+  /* EVENT INFO CARDS */
+  .info-cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 32px 24px 16px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .info-card {
+    flex: 1;
+    min-width: 240px;
+    max-width: 260px;
+    border-radius: 16px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .info-card.fri { background: #FDF0E9; border: 1.5px solid var(--friday); }
+  .info-card.sat { background: #EEF5EE; border: 1.5px solid var(--saturday); }
+  .info-card.sun { background: #E9EFF5; border: 1.5px solid var(--sunday); }
+  .info-card-emoji { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+  .info-card-day {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .info-card-time {
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.65;
+    margin-bottom: 10px;
+  }
+  .info-card-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #444;
+  }
+
+  /* MONTHS */
+  .months-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px 24px 60px;
+  }
+  .month-block { margin-bottom: 40px; }
+  .month-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(0,0,0,0.08);
+    color: var(--navy);
+  }
+  .month-title span { font-style: italic; font-weight: 400; font-size: 1rem; color: var(--muted); margin-left: 10px; }
+
+  .slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .slot {
+    background: var(--warm-white);
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .slot:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+  .slot.fri { border-color: rgba(201,106,62,0.3); }
+  .slot.sat { border-color: rgba(143,175,140,0.3); }
+  .slot.sun { border-color: rgba(106,143,175,0.3); }
+  .slot.selected.fri { background: #FDF0E9; border-color: var(--friday); }
+  .slot.selected.sat { background: #EEF5EE; border-color: var(--saturday); }
+  .slot.selected.sun { background: #E9EFF5; border-color: var(--sunday); }
+  .slot.full { opacity: 0.45; cursor: not-allowed; }
+  .slot.full:hover { transform: none; box-shadow: none; }
+
+  .slot-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .slot-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .slot-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .fri .slot-tag { background: rgba(201,106,62,0.12); color: var(--friday); }
+  .sat .slot-tag { background: rgba(143,175,140,0.2); color: #5a8a57; }
+  .sun .slot-tag { background: rgba(106,143,175,0.15); color: #3a6a8f; }
+  .slot-time {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .slot-spots {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .slot-check {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .slot.selected .slot-check { opacity: 1; }
+  .fri .slot-check { background: var(--friday); color: white; }
+  .sat .slot-check { background: var(--saturday); color: white; }
+  .sun .slot-check { background: var(--sunday); color: white; }
+
+  /* SIGNUP PANEL */
+  .signup-sticky {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--navy);
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.2);
+  }
+  .signup-sticky.visible { transform: translateY(0); }
+  .signup-count {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+  }
+  .signup-count strong { color: var(--blush); }
+  .signup-btn {
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .signup-btn:hover { background: #b05430; transform: scale(1.03); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--warm-white);
+    border-radius: 24px;
+    padding: 36px 32px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.25s;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .modal-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+  .selected-summary {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: #555;
+  }
+  .selected-summary strong { color: var(--navy); display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #E0DAD4;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    background: white;
+    outline: none;
+    transition: border-color 0.2s;
+    color: var(--text);
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--terracotta); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 40px;
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-cancel:hover { background: var(--cream); }
+  .btn-submit {
+    flex: 2;
+    padding: 12px;
+    border: none;
+    border-radius: 40px;
+    background: var(--navy);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: #2e4560; }
+
+  /* SUCCESS */
+  .success-screen {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .success-emoji { font-size: 3rem; display: block; margin-bottom: 16px; animation: pop 0.4s ease; }
+  @keyframes pop { 0%{transform:scale(0)} 80%{transform:scale(1.15)} 100%{transform:scale(1)} }
+  .success-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .success-screen p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+  .success-dates {
+    margin: 20px 0;
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: #444;
+    text-align: left;
+  }
+  .btn-close-success {
+    margin-top: 8px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 40px;
+    background: var(--terracotta);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  @media(max-width: 520px) {
+    .info-cards { flex-direction: column; align-items: center; }
+    .info-card { max-width: 100%; }
+    .form-actions { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-emoji">🍼</span>
+    <h1>Come hang with us <em>&amp; the babies</em></h1>
+    <p class="hero-sub">We're in NYC from April 10 through June 14 and we'd love to see you! Come solo or grab a group of friends and reserve a slot together — either way, we want to see you. The babies are cute. The vibes are good.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+      <span class="hero-note">🍼 Come solo or reserve a slot with your crew — one group per date!</span>
+      <span class="hero-note">✈️ Coming from out of town? You can select multiple consecutive dates.</span>
+      <span class="hero-note" style="opacity:0.7">⚠️ Julie is working on a film this spring — her presence is not guaranteed, but all the love is.</span>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-fri"></div> Friday Evening — Shabbat dinner + bedtime</div>
+  <div class="legend-item"><div class="legend-dot dot-sat"></div> Saturday Afternoon — Hangout / adventure</div>
+  <div class="legend-item"><div class="legend-dot dot-sun"></div> Sunday Morning — Slow morning hangout</div>
+</div>
+
+<div class="info-cards">
+  <div class="info-card fri">
+    <span class="info-card-emoji">🕯️</span>
+    <div class="info-card-day">Friday Evenings</div>
+    <div class="info-card-time">5:00 PM · Upper West Side</div>
+    <div class="info-card-desc">Come to our apartment, order in Shabbat dinner, join bath time and the bedtime routine with the babies — then hang out and catch up while they sleep.</div>
+  </div>
+  <div class="info-card sat">
+    <span class="info-card-emoji">🌿</span>
+    <div class="info-card-day">Saturday Afternoons</div>
+    <div class="info-card-time">2:00 PM · TBD</div>
+    <div class="info-card-desc">Hanging at the apartment or doing something fun around the city. Open to ideas and recommendations — suggest something when you sign up!</div>
+  </div>
+  <div class="info-card sun">
+    <span class="info-card-emoji">☀️</span>
+    <div class="info-card-day">Sunday Mornings</div>
+    <div class="info-card-time">11:00 AM · TBD</div>
+    <div class="info-card-desc">A slow Sunday morning together. Come over or we venture out — all very flexible. Love a good park walk or brunch spot suggestion.</div>
+  </div>
+</div>
+
+<div class="months-container" id="calendar"></div>
+
+<div class="signup-sticky" id="stickyBar">
+  <div class="signup-count">
+    <strong id="selectedCount">0</strong> date<span id="pluralS">s</span> selected
+  </div>
+  <button class="signup-btn" onclick="openModal()">Reserve my spot →</button>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox">
+    <div id="formView">
+      <h2>Let's lock it in! 🎉</h2>
+      <p class="modal-sub">Tell us who you are and we'll add you to the calendar.</p>
+      <div class="selected-summary" id="selectedSummary"></div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="nameInput" placeholder="e.g. Sarah & Mike" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="emailInput" placeholder="so we can confirm with you" />
+      </div>
+      <div id="outOfTownGroup" style="display:none;background:#E9EFF5;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:0.85rem;color:#3a6a8f;line-height:1.5;">
+        ✈️ <strong>Visiting from out of town?</strong> You've selected multiple dates — we love it! Just let us know in the notes below.
+      </div>
+      <div class="form-group">
+        <label>How many adults in your group?</label>
+        <input type="number" id="countInput" placeholder="e.g. 2" min="1" max="12" />
+      </div>
+      <div class="form-group">
+        <label>Any ideas or notes? (activity suggestions, dietary stuff, etc.)</label>
+        <textarea id="notesInput" placeholder="We'd love to hear your ideas for Saturdays/Sundays — a park, a museum, a brunch spot..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="closeModal()">Back</button>
+        <button class="btn-submit" onclick="submitForm()">Count me in! 🙌</button>
+      </div>
+    </div>
+    <div id="successView" class="success-screen" style="display:none">
+      <span class="success-emoji">🥳</span>
+      <h2>You're on the list!</h2>
+      <p>We're so excited to see you. We'll be in touch to confirm closer to the date.</p>
+      <div class="success-dates" id="successDates"></div>
+      <p style="font-size:0.85rem;color:#aaa;margin-bottom:16px">P.S. Remember — Julie might be on set, but the babies will definitely be there 🍼</p>
+      <button class="btn-close-success" onclick="closeModal()">Can't wait! ✨</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Build dates — 1 spot per slot (one friend group per date)
+const MAX_PER_SLOT = 1;
+
+const slots = [];
+
+function addSlots(startDate, endDate) {
+  const d = new Date(startDate);
+  const end = new Date(endDate);
+  while (d <= end) {
+    const day = d.getDay();
+    if (day === 5) {
+      slots.push({ date: new Date(d), type: 'fri', time: '5:00 PM', tag: 'Friday Eve', spots: 1, signups: [] });
+    } else if (day === 6) {
+      slots.push({ date: new Date(d), type: 'sat', time: '2:00 PM', tag: 'Saturday Aft.', spots: 1, signups: [] });
+    } else if (day === 0) {
+      slots.push({ date: new Date(d), type: 'sun', time: '11:00 AM', tag: 'Sunday Morn', spots: 1, signups: [] });
+    }
+    d.setDate(d.getDate() + 1);
+  }
+}
+
+addSlots('2025-04-10', '2025-06-14');
+
+// Load from localStorage
+function loadState() {
+  try {
+    const saved = localStorage.getItem('playdateSignups');
+    if (saved) {
+      const data = JSON.parse(saved);
+      data.forEach(s => {
+        const slot = slots.find(sl => sl.date.toDateString() === new Date(s.date).toDateString() && sl.type === s.type);
+        if (slot) slot.signups = s.signups || [];
+      });
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  const data = slots.map(s => ({ date: s.date.toISOString(), type: s.type, signups: s.signups }));
+  localStorage.setItem('playdateSignups', JSON.stringify(data));
+}
+
+loadState();
+
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+let selected = new Set();
+
+function formatDate(d) {
+  return `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
+}
+
+function formatFull(slot) {
+  const d = slot.date;
+  const labels = { fri: '🕯️ Friday Evening at 5:00 PM', sat: '🌿 Saturday Afternoon at 2:00 PM', sun: '☀️ Sunday Morning at 11:00 AM' };
+  return `${formatDate(d)} — ${labels[slot.type]}`;
+}
+
+// Check if two slot indices are on consecutive event-days
+// A Fri→Sat, Sat→Sun, or Fri→Sat→Sun within the same weekend are consecutive.
+// Also Sat→Sun is consecutive. Sun→Fri of next weekend is NOT consecutive.
+function areConsecutive(idxA, idxB) {
+  const [a, b] = [Math.min(idxA, idxB), Math.max(idxA, idxB)];
+  const dateA = slots[a].date;
+  const dateB = slots[b].date;
+  const diffDays = Math.round((dateB - dateA) / (1000 * 60 * 60 * 24));
+  // consecutive means within 2 days of each other (Fri→Sat = 1, Sat→Sun = 1, Fri→Sun = 2)
+  return diffDays <= 2;
+}
+
+// Check if adding index i keeps the whole selection consecutive
+function wouldBeConsecutive(i) {
+  if (selected.size === 0) return true;
+  const all = [...selected, i].sort((a, b) => slots[a].date - slots[b].date);
+  for (let k = 0; k < all.length - 1; k++) {
+    if (!areConsecutive(all[k], all[k + 1])) return false;
+  }
+  return true;
+}
+
+let consecutiveWarning = false;
+
+function renderCalendar() {
+  const calendar = document.getElementById('calendar');
+  calendar.innerHTML = '';
+
+  // Warning banner (shown when invalid selection attempted)
+  if (consecutiveWarning) {
+    const warn = document.createElement('div');
+    warn.style.cssText = 'background:#FFF3E0;border:1.5px solid #E8A045;border-radius:12px;padding:12px 18px;margin-bottom:20px;font-size:0.88rem;color:#7a4a10;line-height:1.5;';
+    warn.innerHTML = '✈️ <strong>Visiting from out of town?</strong> You can select multiple dates, but they need to be consecutive (e.g. a Friday evening + Saturday + Sunday of the same weekend).';
+    calendar.appendChild(warn);
+  }
+
+  const byMonth = {};
+  slots.forEach((slot, i) => {
+    const key = `${slot.date.getFullYear()}-${slot.date.getMonth()}`;
+    if (!byMonth[key]) byMonth[key] = { year: slot.date.getFullYear(), month: slot.date.getMonth(), items: [] };
+    byMonth[key].items.push({ slot, i });
+  });
+
+  Object.values(byMonth).forEach(({ year, month, items }) => {
+    const block = document.createElement('div');
+    block.className = 'month-block';
+    const avail = items.filter(({slot}) => slot.signups.length === 0).length;
+    block.innerHTML = `<div class="month-title">${months[month]} ${year} <span>${avail} date${avail !== 1 ? 's' : ''} available</span></div><div class="slots-grid" id="grid-${year}-${month}"></div>`;
+    calendar.appendChild(block);
+
+    const grid = block.querySelector(`#grid-${year}-${month}`);
+    items.forEach(({slot, i}) => {
+      const isFull = slot.signups.length >= slot.spots;
+      const isSelected = selected.has(i);
+      // Dim non-consecutive options if something is already selected
+      const notConsecutiveOption = selected.size > 0 && !isSelected && !wouldBeConsecutive(i);
+
+      const card = document.createElement('div');
+      card.className = `slot ${slot.type}${isSelected ? ' selected' : ''}${isFull ? ' full' : ''}`;
+      if (notConsecutiveOption && !isFull) card.style.opacity = '0.35';
+      card.onclick = () => toggleSlot(i);
+
+      card.innerHTML = `
+        <div class="slot-header">
+          <div class="slot-date">${formatDate(slot.date)}</div>
+          <div class="slot-tag">${slot.tag}</div>
+        </div>
+        <div class="slot-time">⏰ ${slot.time}</div>
+        <div class="slot-spots" style="font-size:0.82rem;color:var(--muted);">
+          ${isFull
+            ? '<span style="color:#c0392b;font-weight:500;">🔒 Reserved</span>'
+            : '<span style="color:#5a9a57;font-weight:500;">✓ Available — 1 group</span>'}
+        </div>
+        <div class="slot-check">✓</div>
+      `;
+      grid.appendChild(card);
+    });
+  });
+}
+
+function toggleSlot(i) {
+  const slot = slots[i];
+  if (slot.signups.length >= slot.spots) return;
+
+  if (selected.has(i)) {
+    selected.delete(i);
+    consecutiveWarning = false;
+    updateSticky();
+    renderCalendar();
+    return;
+  }
+
+  if (!wouldBeConsecutive(i)) {
+    consecutiveWarning = true;
+    renderCalendar();
+    return;
+  }
+
+  consecutiveWarning = false;
+  selected.add(i);
+  updateSticky();
+  renderCalendar();
+}
+
+function updateSticky() {
+  const bar = document.getElementById('stickyBar');
+  const count = selected.size;
+  document.getElementById('selectedCount').textContent = count;
+  document.getElementById('pluralS').textContent = count === 1 ? '' : 's';
+  bar.classList.toggle('visible', count > 0);
+}
+
+function openModal() {
+  if (selected.size === 0) return;
+  const summary = document.getElementById('selectedSummary');
+  const selectedSlots = [...selected].sort((a,b) => slots[a].date - slots[b].date);
+  const isMulti = selectedSlots.length > 1;
+  summary.innerHTML = `<strong>Your selected date${isMulti ? 's' : ''}</strong>${selectedSlots.map(i => formatFull(slots[i])).join('<br>')}`;
+  document.getElementById('outOfTownGroup').style.display = isMulti ? 'block' : 'none';
+  document.getElementById('formView').style.display = 'block';
+  document.getElementById('successView').style.display = 'none';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// 👇 Step 1: Paste your Formspree URL here (e.g. https://formspree.io/f/xyzabc123)
+const FORMSPREE_URL = 'https://formspree.io/f/xbdzqnya';
+
+async function submitForm() {
+  const name = document.getElementById('nameInput').value.trim();
+  const email = document.getElementById('emailInput').value.trim();
+  const count = parseInt(document.getElementById('countInput').value) || 1;
+  const notes = document.getElementById('notesInput').value.trim();
+
+  if (!name) { alert('Please enter your name!'); return; }
+  if (!email) { alert('Please enter your email!'); return; }
+
+  const selectedSlots = [...selected].sort((a,b) => slots[a].date - slots[b].date);
+  const dateStrings = selectedSlots.map(i => formatFull(slots[i])).join(' | ');
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Sending… 🕐';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        guests: count,
+        dates: dateStrings,
+        notes
+      })
+    });
+    if (!response.ok) throw new Error('Formspree error');
+  } catch(e) {
+    alert('Oops, something went wrong submitting the form. Please try again!');
+    btn.textContent = 'Count me in! 🙌';
+    btn.disabled = false;
+    return;
+  }
+
+  selectedSlots.forEach(i => {
+    slots[i].signups.push({ name, email, count, notes, timestamp: new Date().toISOString() });
+  });
+  saveState();
+
+  const datesHTML = selectedSlots.map(i => `• ${formatFull(slots[i])}`).join('<br>');
+  document.getElementById('successDates').innerHTML = datesHTML;
+
+  document.getElementById('formView').style.display = 'none';
+  document.getElementById('successView').style.display = 'block';
+
+  btn.textContent = 'Count me in! 🙌';
+  btn.disabled = false;
+
+  selected.clear();
+  consecutiveWarning = false;
+  updateSticky();
+  renderCalendar();
+}
+
+renderCalendar();
+</script>
+</body>
+</html>
